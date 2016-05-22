@@ -1,0 +1,105 @@
+Imagine you have a circle of people and you go around the circle removing every second person until one person is left.
+
+If you have 3 people in the circle, then the 3rd person will be the last one remaining.
+If you have 4 people then the 1st person will be the last one remaining.
+If you have 11 people then the 7th person will be the one remaining.
+
+If you have N people in the circle, who will be the last one remaining?
+
+Please formulate your answer as a general solution and not as an algorithm that simulates the problem.
+
+
+n   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+P(n)| 1 | 1 | 3 | 1 | 3 | 5 | 7 | 1 | 3 |  5 |  7 |  9 |
+
+The first thing to notice here is that never an even number will be the last one because the first trip through the circle
+eliminates the even numbers. and all numbers that are power of 2 the last number remaining will always be 1. They are
+grouped by power of 2.
+
+
+Assume we start with 2n people, the first trip through eliminates even numbers, the left is a set of odd numbers.
+
+If we assume the set remaining is even:
+
+j(2n) = 2*j(n) - 1  
+
+If we assume the set is odd:
+
+j(2n+1) = 2*j(n) + 1
+
+the general theorem is
+
+j(2^p + r) = 2r + 1, where p >= 0 and 0<= r < 2^p, e^p is the largest power of two
+that are less or equals n and r are the remainder to complete n
+
+basis case: 
+assume n = 1
+j(1) = j(2^p + r)
+
+j(2^0 + 0) 
+
+j(0)
+
+now we replace j(0) with the odd formula 2*j(n) + 1
+
+2*0 + 1 = 1
+  
+know that the basis case is proved we make the induction steps for even and odd
+separetely
+
+even case
+
+2n = 2^p + r
+
+j(2^p+r) = 2j(n) - 1               
+
+= 2j((2^p+r)/2) - 1
+
+= 2j(2^(p-1) + r/2) - 1
+
+in order to go to next step i do another induction
+
+j(2^p + r) = 2r + 1
+
+n = p - 1 and k = r/2
+
+j(2^n + k) = 2k + 1
+
+= 2k/2 + 1
+
+returning i've got
+
+= 2(2r/2 + 1) - 1
+ 
+= 2r + 1
+
+so for even numbers that's the proof
+
+
+for odd numbers 2^p + r = 2r + 1
+
+j(2^p + r) = 2j(n) + 1
+
+= 2j(2^(p-1) + (r-1)/2) + 1
+
+as the even we need another step of induction
+
+j(2^p + r) = 2r + 1
+
+n = p - 1 and k = (r-1)/2
+
+j(2^n + k) = 2k + 1
+
+= 2(k-1)/2 + 1
+
+= k-1+1
+
+returning
+
+= 2(r-1+1) + 1 
+
+= 2r -2 + 2 + 1
+
+= 2r + 1
+
+that's the end of the proof by induction for odd numbers
